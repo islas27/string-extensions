@@ -1,2 +1,2 @@
-# string-extensions
-Extending the String prototype, to make string easier to manage
+# stringHelperJS
+A string builder to make strings easier to manage
