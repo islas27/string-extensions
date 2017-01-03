@@ -1,8 +1,9 @@
 module.exports = stringHelper
+require('array-extensions')
 
 function stringHelper () {
-  let buffer = []
-  let classifier = function (input) {
+  let buffer = (arguments.length > 0) ? [...arguments].flatten() : []
+  function classifier (input) {
     if (Array.isArray(input)) return 'array'
     else return typeof input
   }
@@ -17,7 +18,7 @@ function stringHelper () {
             buffer.push(arg.apply(this, buffer))
             break
           case 'array':
-            buffer.push(...arg)
+            buffer.push(...arg.flatten())
             break
           case 'undefined':
           case 'object':
@@ -26,8 +27,10 @@ function stringHelper () {
             buffer.push(arg)
         }
       }
-      console.log(buffer)
       return this
+    },
+    str: function () {
+      return buffer.join('')
     }
   }
 }
