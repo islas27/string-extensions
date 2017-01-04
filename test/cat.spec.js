@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 const StringHelper = require('../index')
 const expect = require('chai').expect
-const sinon = require('sinon')
 
 describe('#cat', () => {
   it('returns a concatenated string with the buffer', () => {
@@ -52,6 +51,48 @@ describe('#cat', () => {
     helper = new StringHelper()
     result = helper.cat('This is ', 'a', [' String', '!!'], () => ' right?').str()
     expect(result).to.equal('This is a String!! right?')
+  })
+
+  it('ignores objects', () => {
+    let helper = new StringHelper()
+    let result = helper.cat('cat ignores objects')
+      .cat({name: 'John', lastName: 'Constantine'}).str()
+    expect(result).to.equal('cat ignores objects')
+  })
+  it('handles correctly falsy values (null, undefined, false)', () => {
+    let helper = new StringHelper()
+    let result = helper.cat(false).cat(null).cat(undefined)
+      .cat(false, null, undefined).str()
+    expect(result).to.equal('falsefalse')
+  })
+
+  it('hanldles correctly differnt kind of outputs from functions', () => {
+    let helper = new StringHelper()
+    let result = helper.cat(() => 'A string ').cat(() => ['can ', 'be '])
+      .cat(() => null).cat(() => undefined).cat(() => () => 'easily manipulated! ')
+      .cat(() => true).cat('!').str()
+    expect(result).to.equal('A string can be easily manipulated! true!')
+  })
+
+  it('handles functions stored in an array', () => {
+    let helper = new StringHelper()
+    let result = helper
+      .cat([() => ['a', 'b'], () => 'c', () => () => 'd']).str()
+    expect(result).to.equal('abcd')
+  })
+
+  it('is capable of using itself inside a function', () => {
+    let helper = new StringHelper('Another')
+    let result = helper.cat(function () {
+      this.cat('String')
+    }).str()
+    expect(result).to.equal('AnotherString')
+  })
+
+  it('has the buffer in a private environment', () => {
+    let helper = new StringHelper().cat('a', 'b', 'c')
+    let result = helper.buffer
+    expect(result).to.be.undefined
   })
 
   it('self-chains into other cat() calls', () => {
