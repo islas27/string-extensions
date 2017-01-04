@@ -2,7 +2,7 @@ module.exports = stringHelper
 require('array-extensions')
 
 function stringHelper () {
-  let buffer = (arguments.length > 0) ? [...arguments].flatten() : []
+  let buffer = []
   let that = this
 
   function classifier (input) {
@@ -27,5 +27,6 @@ function stringHelper () {
     return buffer.join('')
   }
 
+  this.cat([...arguments])
   return this
 }
