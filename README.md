@@ -76,3 +76,4 @@ console.log(
     .catIf('yes! (:', myAge >= 18).catIf('no :(', myAge < 18).str()
   )
 ```
+**Notes**: When the method is called with no boolean at the end or a list or args with less than two elements, it will not do anything
