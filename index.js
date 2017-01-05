@@ -23,5 +23,14 @@ function stringHelper () {
     return buffer.join('')
   }
 
+  this.catIf = function () {
+    let args = [...arguments]
+    const idx = args.length - 1
+    if (idx > 0 && classifier(args[idx]) === 'boolean' && args[idx]) {
+      this.cat(args.slice(0, -1))
+    }
+    return this
+  }
+
   this.cat([...arguments])
 }
