@@ -23,5 +23,13 @@ function stringHelper () {
     return buffer.join('')
   }
 
+  this.rep = function (s, rep) {
+    let repetitions = (classifier(rep) === 'number') ? rep : 1
+    for (let i = 0; i < repetitions; i += 1) {
+      this.cat(s)
+    }
+    return this
+  }
+
   this.cat([...arguments])
 }

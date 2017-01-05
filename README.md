@@ -1,7 +1,7 @@
 # stringHelperJS
 A string builder to make strings easier to manage
 
-Examples of how to use the methods can be found in the examples folder, with a commented output, which can be verified by executing the example using node in any terminal: `node examples/[method].js`
+Some examples of how to use the methods can be found in the examples folder when no example is given here, with a commented output, which can be verified by executing the example using node in any terminal: `node examples/[method].js`
 
 ## Usage
 
@@ -58,3 +58,20 @@ This function will 'save' all the strings sent to it in any format, be it a list
 **Notes**:
 - When `typeof` of an input evaluates to `object` or `undefined`, this argument will be ignored. This happens to any kind of object, map, null or undefined values. To know more about the `typeof` operand, follow this link: [typeof - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
 - While arrow functions maybe more clean and concise, the do not bind the `this` object, so in case you need to use the helper inside a function that is going to be passed as an argument, write an old fashion function. More info on arrow functions: [Arrow Functions - MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+
+---
+
+### rep(str, repetitions)
+The functions will append at the end of the current buffer the string sent the number of times indicates.
+
+**Sintax**: `helper.rep(str, repetitions)`
+
+**Inputs**: `str`: Any kind of input that ultimately can be converted or executed into a string. `repetitions`: the number of times to repeat the same string
+
+**Outputs**: itself, to be capable of chained execution
+
+**Example**:
+```js
+helper.cat('Mom, can you').rep(' please', 10).cat(' buy me an ice cream');
+```
+**Notes**: In case no `repetitions` is sent, or is not a number, by default will append the string one time
