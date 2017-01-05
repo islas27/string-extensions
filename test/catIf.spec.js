@@ -43,13 +43,4 @@ describe('#catIf', () => {
     result = new StringHelper().catIf(['a', 'b'], () => 'c', 'd', true).str()
     expect(result).to.equal('abcd')
   })
-
-  it('bleh', () => {
-    let myAge = 24
-    console.log(
-      new StringHelper('Can I go to the movie `Kingsman`? ')
-        .catIf('yes', myAge >= 18)
-        .catIf('no', myAge < 18).str()
-      )
-  })
 })
