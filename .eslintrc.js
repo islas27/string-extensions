@@ -4,5 +4,8 @@ module.exports = {
     "plugins": [
         "standard",
         "promise"
-    ]
+    ],
+    "rules": {
+        // enable additional rules
+    }
 };
