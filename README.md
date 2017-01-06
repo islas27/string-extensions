@@ -61,12 +61,12 @@ This function will 'save' all the strings sent to it in any format, be it a list
 
 ---
 
-### rep(str, repetitions)
-The functions will append at the end of the current buffer the string sent the number of times indicates.
+### rep(arg1, arg2, ... , argN, repetitions)
+The function will append at the end of the current buffer the arguments sent, the number of times indicated.
 
-**Sintax**: `helper.rep(str, repetitions)`
+**Sintax**: `helper.rep(arg1, arg2, ... , argN, repetitions)`
 
-**Inputs**: `str`: Any kind of input that ultimately can be converted or executed into a string. `repetitions`: the number of times to repeat the same string
+**Inputs**: `arg1`, `arg2`, ... , `argN`: Any kind of input that ultimately can be converted or executed into a string. `repetitions`: the number of times to repeat the same string
 
 **Outputs**: itself, to be capable of chained execution
 
@@ -74,4 +74,4 @@ The functions will append at the end of the current buffer the string sent the n
 ```js
 helper.cat('Mom, can you').rep(' please', 10).cat(' buy me an ice cream');
 ```
-**Notes**: In case no `repetitions` is sent, or is not a number, by default will append the string one time
+**Notes**: In case no `repetitions` is sent, or is not a number, by default will append the arguments one time
