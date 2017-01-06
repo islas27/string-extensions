@@ -1,8 +1,11 @@
 module.exports = stringHelper
 require('array-extensions')
 
-const classifier = input => Array.isArray(input) ? 'array' : typeof input
-const isType = (type, input) => classifier(input) === type
+const isArr = inp => Array.isArray(inp)
+const isType = (type, inp) => typeof inp === type
+const isFunc = inp => isType('function', inp)
+const isNum = inp => isType('number', inp)
+const isIgnored = inp => isType('undefined', inp) || isType('object', inp)
 
 function stringHelper () {
   let buffer = []
@@ -11,9 +14,9 @@ function stringHelper () {
     const len = arguments.length
     for (let i = 0; i < len; i += 1) {
       let arg = arguments[i]
-      if (isType('function', arg)) this.cat(arg.apply(this))
-      else if (isType('array', arg)) this.cat(...arg.flatten())
-      else if (isType('undefined', arg) || isType('object', arg)) continue
+      if (isFunc(arg)) this.cat(arg.apply(this))
+      else if (isArr(arg)) this.cat(...arg.flatten())
+      else if (isIgnored(arg)) continue
       else buffer.push(arg)
     }
     return this
@@ -26,7 +29,7 @@ function stringHelper () {
   this.rep = function () {
     let args = [...arguments]
     let rep = args.pop()
-    if (isType('number', rep)) {
+    if (isNum(rep)) {
       for (let i = 0; i < rep; i += 1) {
         this.cat(args)
       }
