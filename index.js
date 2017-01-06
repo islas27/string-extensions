@@ -2,7 +2,6 @@ module.exports = stringHelper
 require('array-extensions')
 
 const classifier = input => Array.isArray(input) ? 'array' : typeof input
-const isType = (type, input) => classifier(input) === type
 
 function stringHelper () {
   let buffer = []
@@ -26,8 +25,7 @@ function stringHelper () {
 
   this.catIf = function () {
     let args = [...arguments]
-    let cond = args.pop()
-    if (isType('boolean', cond) && cond) this.cat(args)
+    if (args.pop() === true) this.cat(args)
     return this
   }
 
