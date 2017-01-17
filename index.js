@@ -26,6 +26,12 @@ function stringHelper () {
     return buffer.join('')
   }
 
+  this.catIf = function () {
+    let args = [...arguments]
+    if (args.pop() === true) this.cat(args)
+    return this
+  }
+
   this.rep = function () {
     let args = [...arguments]
     let rep = args.pop()
