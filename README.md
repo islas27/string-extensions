@@ -66,7 +66,7 @@ This function works as a conditional wrapper for `cat()`, as it will only execut
 
 **Sintax**: `helper.catIf(arg1, arg2, ...argN, contidion)`
 
-**Inputs**: `argN`: Any kind of input that ultimately can be converted or executed into a string. `contidion`: a boolean (strictly) to decide is the previous arguments are to be cat() or not.
+**Inputs**: `argN`: Any kind of input that ultimately can be converted or executed into a string. `contidion`: a boolean (strictly) to decide if the previous arguments are to be cat() or not.
 
 **Outputs**: itself, to be capable of chained execution
 
