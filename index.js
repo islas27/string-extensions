@@ -6,7 +6,8 @@ const isType = (type, inp) => typeof inp === type
 const isFunc = inp => isType('function', inp)
 const isNum = inp => isType('number', inp)
 const isIgnored = inp => isType('undefined', inp) || isType('object', inp)
-const enclose = (pf, arg, sf) => pf.concat([...arg].concat(sf))
+const reverse = arr => arr.slice().reverse()
+const enclose = (pf, arg, sf) => reverse(pf).concat([...arg].concat(sf))
 
 function StringHelper () {
   let aux = []
@@ -59,8 +60,17 @@ function StringHelper () {
   this.wrap = function (prefix, suffix) {
     if (arguments.length !== 2) return this
     decorators = true
-    prefixes.unshift(prefix)
+    prefixes.push(prefix)
     suffixes.push(suffix)
+    return this
+  }
+
+  this.end = function (deep) {
+    const howMany = (isNum(deep) && deep >= 0) ? deep : 1
+    for (let i = 0; i < howMany; i += 1) {
+      prefixes.pop()
+      suffixes.pop()
+    }
     return this
   }
 
