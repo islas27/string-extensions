@@ -34,14 +34,14 @@ describe('#wrap', () => {
   })
 
   it('is capable of receiving functions', () => {
-    let helper = new StringHelper()
-    let result = helper.cat('<ul>').wrap(['<li>', (function () {
-      var count = 0
+    let cls = (function () {
+      let count = 0
       return function () {
-        count += 1
-        return count
+        return ++count
       }
-    }()), '.- '], '</li>')
+    }())
+    let helper = new StringHelper()
+    let result = helper.cat('<ul>').wrap(['<li>', cls, '.- '], '</li>')
     .rep('list item', 2).str()
     expect(result).to.equal(`<ul><li>1.- list item</li><li>2.- list item</li>`)
   })

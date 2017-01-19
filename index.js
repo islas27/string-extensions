@@ -15,13 +15,13 @@ function StringHelper () {
   let suffixes = []
   let decorators = false
 
-  function ccat () {
+  function join () {
     const len = arguments.length
     let args = arguments
     for (let i = 0; i < len; i += 1) {
       let arg = args[i]
-      if (isFunc(arg)) ccat(arg.apply(new StringHelper()))
-      else if (isArr(arg)) ccat(...arg.flatten())
+      if (isFunc(arg)) join(arg.call(new StringHelper()))
+      else if (isArr(arg)) join(...arg.flatten())
       else if (isIgnored(arg)) continue
       else aux.push(arg)
     }
@@ -30,7 +30,7 @@ function StringHelper () {
   this.cat = function () {
     let args = (decorators) ? enclose(prefixes, arguments, suffixes) : arguments
     aux = []
-    ccat.apply(this, args)
+    join.apply(this, args)
     buffer.push(...aux)
     return this
   }
@@ -57,7 +57,7 @@ function StringHelper () {
   }
 
   this.wrap = function (prefix, suffix) {
-    if ([...arguments].length !== 2) return this
+    if (arguments.length !== 2) return this
     decorators = true
     prefixes.unshift(prefix)
     suffixes.push(suffix)
