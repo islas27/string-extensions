@@ -84,7 +84,7 @@ describe('#cat', () => {
   it('is capable of using itself inside a function', () => {
     let helper = new StringHelper('Another')
     let result = helper.cat(function () {
-      this.cat('String')
+      return this.cat('String').str()
     }).str()
     expect(result).to.equal('AnotherString')
   })

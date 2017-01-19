@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 const StringHelper = require('../index')
 const expect = require('chai').expect
-const sinon = require('sinon')
 
 describe('#wrap', () => {
   it('ignores calls with no arguments', () => {
