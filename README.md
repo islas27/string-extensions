@@ -72,7 +72,7 @@ let result = helper.cat(function () {
 ### catIf(..args, condition)
 This function works as a conditional wrapper for `cat()`, as it will only execute `cat()` if the condition sent evaluates to true.
 
-**Sintax**: `helper.catIf(arg1, arg2, ...argN, contidion)`
+**Sintax**: `helper.catIf(arg1, arg2, ...argN, condition)`
 
 **Inputs**: `argN`: Any kind of input that ultimately can be converted or executed into a string. `contidion`: a boolean (strictly) to decide if the previous arguments are to be cat() or not.
 
@@ -114,12 +114,52 @@ helper.cat('Mom, can you').rep(' please', 10).cat(' buy me an ice cream');
 
 **Inputs**: `[prefix]` & `[suffix]`: Inputs that ultimately can be converted or executed into a string. Each can be a single argument, or an array holding more strings.
 
-**Outputs**: itself, to be capable of chained execution
+**Outputs**: itself, to be capable of chained execution.
 
 **Example**: [wrap.js](examples/wrap.js)
 
 **Notes**:
 - It will wrap **all** the content in a `cat()` call, not each argument in it. `rep()` will do a `cat()` call for each repetition (So a `rep('a', 5)` is actually calling `cat()` five times).
+
+---
+
+### prefix(arg1, arg2, ... , argN)
+Similar to `cat()`, `prefix()` takes an indeterminate number of arguments, and will add the decorators in the same manner as `wrap()`.
+
+**Sintax**: `helper.prefix(arg1, arg2, ... , argN)`
+
+**Inputs**: Any kind of input that ultimately can be converted or executed into a string.
+
+**Outputs**: itself, to be capable of chained execution.
+
+**Example**:
+```js
+let result = helper.prefix('Mr. ').cat('John Smith ').cat('Joe Black').str()
+// Outputs: 'Mr. John Smith Mr. Joe Black'
+```
+
+**Notes**:
+- This is actually a wrapper for `wrap([my prefix], [])`, so the same behavior applies to any `prefix()` call.
+
+---
+
+### suffix(arg1, arg2, ... , argN)
+`suffix()` works in a similar fashion to `prefix()`, it takes an indeterminate number of arguments, and will add the decorators at the end of subsequent `cat()` calls.
+
+**Sintax**: `helper.suffix(arg1, arg2, ... , argN)`
+
+**Inputs**: Any kind of input that ultimately can be converted or executed into a string.
+
+**Outputs**: itself, to be capable of chained execution.
+
+**Example**:
+```js
+let result = helper.suffix('.- list item ').cat('1').cat('2').str()
+// Outputs: '1.- list item 2.- list item'
+```
+
+**Notes**:
+- This is actually a wrapper for `wrap([], [my suffix])`, so the same behavior applies to any `suffix()` call.
 
 ---
 
@@ -140,4 +180,4 @@ let result = helper.cat('a').wrap('b', 'd').cat('c').end().cat('e').str()
 ```
 
 **Notes**:
-- If `deep` is not a valid number (deep >= 0), it will default too to 1. If deep is larger than the number of decorators, it will remove all of them.
+- If `deep` is not a valid number (deep >= 0), it will default to 1 too. If deep is larger than the number of decorators, it will remove all of them.
