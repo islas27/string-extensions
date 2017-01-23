@@ -84,9 +84,21 @@ describe('#cat', () => {
   it('is capable of using itself inside a function', () => {
     let helper = new StringHelper('Another')
     let result = helper.cat(function () {
-      this.cat('String')
+      return this.cat('String').str()
     }).str()
     expect(result).to.equal('AnotherString')
+  })
+
+  it('ignores itself if using itself inside a function and str() is not used', () => {
+    let helper = new StringHelper('Another')
+    let result = helper.cat(function () {
+      return this.cat('String')
+    }).str()
+    expect(result).to.equal('Another')
+    result = helper.cat(function () {
+      this.cat('String')
+    }).str()
+    expect(result).to.equal('Another')
   })
 
   it('has the buffer in a private environment', () => {

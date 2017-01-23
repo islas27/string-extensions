@@ -1,4 +1,4 @@
-module.exports = stringHelper
+module.exports = StringHelper
 require('array-extensions')
 
 const isArr = inp => Array.isArray(inp)
@@ -6,19 +6,32 @@ const isType = (type, inp) => typeof inp === type
 const isFunc = inp => isType('function', inp)
 const isNum = inp => isType('number', inp)
 const isIgnored = inp => isType('undefined', inp) || isType('object', inp)
+const enclose = (pf, arg, sf) => pf.concat([...arg].concat(sf))
 
-function stringHelper () {
+function StringHelper () {
+  let aux = []
   let buffer = []
+  let prefixes = []
+  let suffixes = []
+  let decorators = false
+
+  function join () {
+    const len = arguments.length
+    let args = arguments
+    for (let i = 0; i < len; i += 1) {
+      let arg = args[i]
+      if (isFunc(arg)) join(arg.call(new StringHelper()))
+      else if (isArr(arg)) join(...arg.flatten())
+      else if (isIgnored(arg)) continue
+      else aux.push(arg)
+    }
+  }
 
   this.cat = function () {
-    const len = arguments.length
-    for (let i = 0; i < len; i += 1) {
-      let arg = arguments[i]
-      if (isFunc(arg)) this.cat(arg.apply(this))
-      else if (isArr(arg)) this.cat(...arg.flatten())
-      else if (isIgnored(arg)) continue
-      else buffer.push(arg)
-    }
+    let args = (decorators) ? enclose(prefixes, arguments, suffixes) : arguments
+    aux = []
+    join.apply(this, args)
+    buffer.push(...aux)
     return this
   }
 
@@ -40,6 +53,14 @@ function stringHelper () {
         this.cat(args)
       }
     } else this.cat(args.concat(rep))
+    return this
+  }
+
+  this.wrap = function (prefix, suffix) {
+    if (arguments.length !== 2) return this
+    decorators = true
+    prefixes.unshift(prefix)
+    suffixes.push(suffix)
     return this
   }
 

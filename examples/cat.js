@@ -8,7 +8,7 @@ let result = helper.cat('this is the first line', '\n')
     .cat(function () {
       return ['or even do more complex mixups', () => ' here\n']
     }).cat(function () {
-      this.cat('like using all the helper functions in a function')
+      return this.cat('like using all the helper functions in a function').str()
     })
     .cat(' inside a cat()').str()
 

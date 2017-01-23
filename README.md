@@ -58,6 +58,14 @@ This function will record all the strings sent to it in any format (a list of st
 **Notes**:
 - When `typeof` of an input evaluates to `object` or `undefined`, this argument will be ignored. This happens to any kind of object, map, null or undefined values. To know more about the `typeof` operand, follow this link: [typeof - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
 - While arrow functions may be more clean and concise, they do not bind a context to the execution of the function (`this`), so in case you need to use the helper inside a function that is going to be passed as an argument, write an old fashioned function. More info on arrow functions: [Arrow Functions - MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+- `cat()` can be quite powerful, as you get a new instance of `StringHelper` bounded to `this` when functions received as parameters are called. Just remember to **return** the result with a `str()`. Example:
+```js
+let helper = new StringHelper('Another')
+let result = helper.cat(function () {
+  return this.cat('String').str()
+}).str()
+// Output: AnotherString
+```
 
 ---
 
@@ -96,3 +104,19 @@ The function will append at the end of the current buffer the arguments sent, th
 helper.cat('Mom, can you').rep(' please', 10).cat(' buy me an ice cream');
 ```
 **Notes**: In case no `repetitions` is sent, or is not a number, by default will append the arguments one time
+
+---
+
+### wrap([prefix], [suffix])
+`wrap()` takes two arguments which will be preappended and appended to the subsequent calls made to add strings, calls like `cat()`, `catIf()`, `rep()`, etc. The content will be stacked, wrapping the content like an onion.
+
+**Sintax**: `helper.wrap([prefix], [suffix])`
+
+**Inputs**: `[prefix]` & `[suffix]`: Inputs that ultimately can be converted or executed into a string. Each can be a single argument, or an array holding more strings.
+
+**Outputs**: itself, to be capable of chained execution
+
+**Example**: [wrap.js](examples/wrap.js)
+
+**Notes**:
+- It will wrap **all** the content in a `cat()` call, not each argument in it. `rep()` will do a `cat()` call for each repetition (So a `rep('a', 5)` is actually calling `cat()` five times).
