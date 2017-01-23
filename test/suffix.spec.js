@@ -22,11 +22,9 @@ describe('#suffix', () => {
   })
 
   it('is capable of receiving functions', () => {
-    let cls = (function () {
+    const cls = (function () {
       let count = 0
-      return function () {
-        return ++count
-      }
+      return () => ++count
     }())
     let helper = new StringHelper()
     let result = helper.suffix('list item ').rep(cls, '.- ', 2).str()
