@@ -14,7 +14,8 @@ function StringHelper () {
   let buffer = []
   let prefixes = []
   let suffixes = []
-  let decorators = false
+  let decorated = false
+  let suspended = false
 
   function join () {
     const len = arguments.length
@@ -29,7 +30,9 @@ function StringHelper () {
   }
 
   this.cat = function () {
-    let args = (decorators) ? enclose(prefixes, arguments, suffixes) : arguments
+    let args = (decorated && !suspended)
+      ? enclose(prefixes, arguments, suffixes)
+      : arguments
     aux = []
     join.apply(this, args)
     buffer.push(...aux)
@@ -59,18 +62,27 @@ function StringHelper () {
 
   this.wrap = function (prefix, suffix) {
     if (arguments.length !== 2) return this
-    decorators = true
+    decorated = true
     prefixes.push(prefix)
     suffixes.push(suffix)
     return this
   }
 
   this.end = function (deep) {
-    const howMany = (isNum(deep) && deep >= 0) ? deep : 1
+    let howMany = (isNum(deep) && deep >= 0) ? deep : 1
+    if (suspended) {
+      howMany--
+      suspended = false
+    }
     for (let i = 0; i < howMany; i += 1) {
       prefixes.pop()
       suffixes.pop()
     }
+    return this
+  }
+
+  this.suspend = function () {
+    suspended = decorated
     return this
   }
 
