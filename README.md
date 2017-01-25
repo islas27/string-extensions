@@ -120,3 +120,24 @@ helper.cat('Mom, can you').rep(' please', 10).cat(' buy me an ice cream');
 
 **Notes**:
 - It will wrap **all** the content in a `cat()` call, not each argument in it. `rep()` will do a `cat()` call for each repetition (So a `rep('a', 5)` is actually calling `cat()` five times).
+
+---
+
+### end(deep)
+This function will cancel the last decorator added (`wrap`, `prefix`, `suffix`), or cancel the number of decorators indicated by the `deep` parameter.
+
+**Sintax**: `helper.end(deep)`
+
+**Inputs**: `deep`: optional input to indicate how many decorators are to be canceled. Defaults to 1
+
+**Outputs**: itself, to be capable of chained execution
+
+**Example**:
+```js
+let helper = new StringHelper()
+let result = helper.cat('a').wrap('b', 'd').cat('c').end().cat('e').str()
+// result: abcde
+```
+
+**Notes**:
+- If `deep` is not a valid number (deep >= 0), it will default too to 1. If deep is larger than the number of decorators, it will remove all of them.
