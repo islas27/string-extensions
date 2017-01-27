@@ -8,7 +8,7 @@ let people = [
 ]
 let titles = ['ID', 'Name', 'Sex', 'Age']
 
-const rows = function (element, index) {
+const row = function (element, index) {
   this.cat('<tr>').prefix('\t')
     .cat('<td>', index, '</td>')
     .cat('<td>', element.name, '</td>')
@@ -18,7 +18,7 @@ const rows = function (element, index) {
 }
 
 const titleRow = function (element) {
-  this.prefix('\t').cat('<th>', element, '</th>').end()
+  this.cat('\t<th>', element, '</th>')
 }
 
 helper.suffix('\n').cat('<table>').prefix('\t')
@@ -28,7 +28,7 @@ helper.suffix('\n').cat('<table>').prefix('\t')
 .cat('</tr>').end()
 .cat('</thead>')
 .cat('<tbody>').prefix('\t')
-.each(people, rows)
+.each(people, row)
 .end()
 .cat('</tbody>')
 .end()

@@ -10,13 +10,16 @@ describe('#each', () => {
     {a: 3, b: 'Lisa'}
   ]
 
-  let table = '<table><thead>' +
-  '<tr><th>ID</th><th>Name</th></tr>' +
-  '</thead><tbody>' +
-  '<tr><td>1</td><td>John</td></tr>' +
-  '<tr><td>2</td><td>Jane</td></tr>' +
-  '<tr><td>3</td><td>Lisa</td></tr>' +
-  '</tbody></table>'
+  let table = `<table>
+  <thead>
+    <tr><th>ID</th><th>Name</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>John</td></tr>
+    <tr><td>2</td><td>Jane</td></tr>
+    <tr><td>3</td><td>Lisa</td></tr>
+  </tbody>
+</table>`
 
   it('sends the correct parameters to the callback', () => {
     let cbSpy = sinon.spy()
@@ -24,7 +27,6 @@ describe('#each', () => {
     let helper = new StringHelper()
     let result = helper.each(data, cbSpy).str()
     expect(result).to.equal('')
-    // console.log(cbSpy.secondCall.args)
     expect(cbSpy.calledWithExactly(jane, 1, data)).to.be.true
   })
 
@@ -46,16 +48,17 @@ describe('#each', () => {
 
   it('it does not break behavior after it\'s use', () => {
     let rows = function (value, index, data) {
-      this
-        .cat('<tr>')
-        .cat('<td>', value.a, '</td>')
-        .cat('<td>', value.b, '</td>')
-        .cat('</tr>')
+      this.cat('  <tr><td>', value.a, '</td><td>', value.b, '</td></tr>')
     }
     let helper = new StringHelper()
-    let result = helper.cat('<table>')
-      .cat('<thead><tr><th>ID</th><th>Name</th></tr></thead>')
-      .cat('<tbody>').each(data, rows).cat('</tbody>')
+    let result = helper.suffix('\n')
+      .cat('<table>').prefix('  ')
+      .cat('<thead>')
+      .cat('  <tr><th>ID</th><th>Name</th></tr>')
+      .cat('</thead>')
+      .cat('<tbody>')
+      .each(data, rows)
+      .cat('</tbody>').end(2)
       .cat('</table>').str()
     expect(result).to.equal(table)
   })
