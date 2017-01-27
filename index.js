@@ -15,7 +15,7 @@ function StringHelper () {
   let prefixes = []
   let suffixes = []
   let decorated = false
-  let suspended = false
+  let states = []
 
   function join () {
     const len = arguments.length
@@ -29,8 +29,22 @@ function StringHelper () {
     }
   }
 
+  function saveState () {
+    states.push({p: prefixes, s: suffixes})
+    prefixes = []
+    suffixes = []
+    decorated = false
+  }
+
+  function restoreState () {
+    let currentState = states.pop()
+    prefixes = currentState.p
+    suffixes = currentState.s
+    decorated = true
+  }
+
   this.cat = function () {
-    let args = (decorated && !suspended)
+    let args = (decorated)
       ? enclose(prefixes, arguments, suffixes)
       : arguments
     aux = []
@@ -70,13 +84,11 @@ function StringHelper () {
 
   this.end = function (deep) {
     let howMany = (isNum(deep) && deep >= 0) ? deep : 1
-    if (suspended) {
-      howMany--
-      suspended = false
-    }
     for (let i = 0; i < howMany; i += 1) {
-      prefixes.pop()
-      suffixes.pop()
+      if (prefixes.length > 0) {
+        prefixes.pop()
+        suffixes.pop()
+      } else if (states.length > 0) restoreState()
     }
     return this
   }
@@ -102,7 +114,7 @@ function StringHelper () {
   }
 
   this.suspend = function () {
-    suspended = decorated
+    if (decorated) saveState()
     return this
   }
 
