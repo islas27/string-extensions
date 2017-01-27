@@ -20,11 +20,12 @@ describe('#each', () => {
 
   it('sends the correct parameters to the callback', () => {
     let cbSpy = sinon.spy()
-    const cb1Args = [{a: 2, b: 'Jane'}, 1, data]
+    const jane = {a: 2, b: 'Jane'}
     let helper = new StringHelper()
     let result = helper.each(data, cbSpy).str()
     expect(result).to.equal('')
-    expect(cbSpy.getCall(1).args).to.eql(cb1Args)
+    // console.log(cbSpy.secondCall.args)
+    expect(cbSpy.calledWithExactly(jane, 1, data)).to.be.true
   })
 
   it('it executes the received callback', () => {
@@ -40,11 +41,11 @@ describe('#each', () => {
     let helper = new StringHelper()
     let result = helper.each(data, cbSpy).str()
     expect(result).to.equal('')
-    expect(cbSpy.thisValues[0]).to.be.equal(new StringHelper())
+    expect(cbSpy.thisValues[0]).to.be.an.instanceOf(StringHelper)
   })
 
   it('it does not break behavior after it\'s use', () => {
-    let rows = function (value, index, thePeople) {
+    let rows = function (value, index, data) {
       this
         .cat('<tr>')
         .cat('<td>', value.a, '</td>')
@@ -53,7 +54,7 @@ describe('#each', () => {
     }
     let helper = new StringHelper()
     let result = helper.cat('<table>')
-      .cat('<thead><tr><th>ID</th><th>Name</th></thead>')
+      .cat('<thead><tr><th>ID</th><th>Name</th></tr></thead>')
       .cat('<tbody>').each(data, rows).cat('</tbody>')
       .cat('</table>').str()
     expect(result).to.equal(table)
