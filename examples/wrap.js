@@ -16,9 +16,7 @@ console.log(result)
 
 const cls = (function () {
   let count = 0
-  return function () {
-    return ++count
-  }
+  return () => ++count
 }())
 result = new StringHelper().cat('Example using other kind of inputs:\n')
   .wrap([() => '-', ' '], [' ', cls, '\n']).rep('item', 3).str()
