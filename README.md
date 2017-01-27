@@ -181,3 +181,19 @@ let result = helper.cat('a').wrap('b', 'd').cat('c').end().cat('e').str()
 
 **Notes**:
 - If `deep` is not a valid number (deep >= 0), it will default to 1 too. If deep is larger than the number of decorators, it will remove all of them.
+
+---
+
+### each([args], callback)
+With this function you can pass a callback to be executed for each member in array; It will have the current state of the builder available through the `this` variable.
+
+**Sintax**: `helper.each([args], callback)`
+
+**Inputs**: `[args]`: Array of elements to be iterated. `callback`: The function to be called for each element in the `[args]` array; It will receive the current `element`, the `index` of it, and the whole list `args`.
+
+**Outputs**: itself, to be capable of chained execution
+
+**Example**: [each.js](examples/each.js)
+
+**Notes**:
+- Because inside the callback function the current builder is available, it is not needed to output content, just to keep interacting with the helper to keep building the final string. Conversely, the result of the callback will be lost.
