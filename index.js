@@ -74,6 +74,18 @@ function StringHelper () {
     return this
   }
 
+  this.prefix = function () {
+    let args = [...arguments]
+    this.wrap(args, [])
+    return this
+  }
+
+  this.suffix = function () {
+    let args = [...arguments]
+    this.wrap([], args)
+    return this
+  }
+
   this.each = function (data, callback) {
     let len = data.length
     for (var i = 0; i < len; i += 1) {
