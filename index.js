@@ -86,5 +86,13 @@ function StringHelper () {
     return this
   }
 
+  this.each = function (data, callback) {
+    let len = data.length
+    for (var i = 0; i < len; i += 1) {
+      callback.call(this, data[i], i, data)
+    }
+    return this
+  }
+
   this.cat([...arguments])
 }
