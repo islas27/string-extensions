@@ -164,7 +164,7 @@ let result = helper.suffix('.- list item ').cat('1').cat('2').str()
 ---
 
 ### end(deep)
-This function will cancel the last decorator added (`wrap`, `prefix`, `suffix`), or cancel the number of decorators indicated by the `deep` parameter.
+This function will cancel the last decorator added (`wrap`, `prefix`, `suffix`), or cancel the number of decorators indicated by the `deep` parameter. It can also cancel a `suspend()` effect.
 
 **Sintax**: `helper.end(deep)`
 
@@ -193,10 +193,32 @@ With this function you can pass a callback to be executed for each member in arr
 
 **Outputs**: itself, to be capable of chained execution
 
-**Example**: [each.js](examples/each.js)
+**Example**: [each.js](examples/each.js), [each2.js](examples/each2.js)
 
 **Notes**:
 - Because inside the callback function the current builder is available, it is not needed to output content, just to keep interacting with the helper to keep building the final string. Conversely, the result of the callback will be lost.
+
+---
+
+### suspend()
+It will save the current decorators and give you a blank slate to keep adding new ones. `end()` is what needs to be called to return to the previous state when there are no more decorators pending.
+
+**Sintax**: `helper.suspend()`
+
+**Outputs**: itself, to be capable of chained execution
+
+**Example**: [suspend.js](examples/suspend.js)
+
+**Notes**:
+- Passing a number greater than the current decorators will restore the previous state (if it exists). Just beware, that if the number is greater than the current decorators + 1, then `end()` will start removing decorators in the freshly restored state. Example:
+```js
+// This will remove the suffix decorator
+helper.wrap('<h1>', '</h1>').suspend().suffix('\n').end(1)
+// This will restore the wrap decorator
+helper.wrap('<h1>', '</h1>').suspend().suffix('\n').end(2)
+// This will remove both wrap() and suffix()
+helper.wrap('<h1>', '</h1>').suspend().suffix('\n').end(3)
+```
 
 ---
 
