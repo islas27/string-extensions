@@ -219,3 +219,19 @@ helper.wrap('<h1>', '</h1>').suspend().suffix('\n').end(2)
 // This will remove both wrap() and suffix()
 helper.wrap('<h1>', '</h1>').suspend().suffix('\n').end(3)
 ```
+
+---
+
+### when(expression, thenArgs, otherwiseArgs)
+This functions works in a similar manner to `catIf()`, it takes a parameter to decide which argument send to a `cat()` call. The main difference is the order of the arguments and the option to add an `otherwiseArgs` should `expression` be false.
+
+**Sintax**: `helper.each([args], callback)`
+
+**Inputs**: `expression`: A parameter used to decide which argument send to the `cat()` call. `thenArgs`: the argument to be sent to `cat()` should `expression` be true. `otherwiseArgs`: the argument to be sent to `cat()` should `expression` be false.
+
+**Outputs**: itself, to be capable of chained execution
+
+**Example**: [when.js](examples/when.js)
+
+**Notes**:
+- `expression` can also be a function, and even use the same context as the builder but it must return a `true` value to really call `cat()` with the `thenArgs`.
