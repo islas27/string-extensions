@@ -120,9 +120,8 @@ function StringHelper () {
 
   this.when = function (expression, then, otherwise) {
     let should = isFunc(expression) ? expression.call(this) : expression
-    if (should === true) this.cat(then)
-    else if (otherwise !== undefined) this.cat(otherwise)
-    return this
+    if (should === true) return this.cat(then)
+    return (otherwise === undefined) ? this : this.cat(otherwise)
   }
 
   this.cat([...arguments])
