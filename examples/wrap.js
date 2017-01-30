@@ -1,4 +1,4 @@
-let StringHelper = require('../index')
+let StringHelper = require('../StringHelper')
 
 let result = new StringHelper().cat('Explaining wrap():\n')
   .wrap('it can', ' content').cat(' enclose').str()

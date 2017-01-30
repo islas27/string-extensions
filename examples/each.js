@@ -1,4 +1,4 @@
-const StringHelper = require('../index')
+const StringHelper = require('../StringHelper')
 
 let helper = new StringHelper()
 let people = [

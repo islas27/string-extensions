@@ -1,26 +1,27 @@
 {
-  "name": "string-extensions",
-  "version": "0.0.1",
-  "description": "Extending the String prototype, to make string easier to manage",
-  "main": "index.js",
+  "name": "StringHelperJS",
+  "version": "1.0.0",
+  "description": "A string builder to make strings easier to manage",
+  "main": "StringHelper.js",
   "scripts": {
     "test": "make test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/islas27/string-extensions.git"
+    "url": "git+https://github.com/islas27/stringHelperJS.git"
   },
   "keywords": [
     "string",
-    "prototype",
+    "builder",
+    "library",
     "helper"
   ],
   "author": "Jonathan Islas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/islas27/string-extensions/issues"
+    "url": "https://github.com/islas27/stringHelperJS/issues"
   },
-  "homepage": "https://github.com/islas27/string-extensions#readme",
+  "homepage": "https://github.com/islas27/stringHelperJS#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.12.2",

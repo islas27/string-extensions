@@ -1,4 +1,4 @@
-let StringHelper = require('../index')
+let StringHelper = require('../StringHelper')
 
 const linesOfText = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',

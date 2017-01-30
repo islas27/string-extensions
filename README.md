@@ -1,4 +1,4 @@
-# stringHelperJS
+# StringHelperJS [![Build Status](https://travis-ci.org/islas27/stringHelperJS.svg?branch=master)](https://travis-ci.org/islas27/stringHelperJS)
 A string builder to make strings easier to manage
 
 Some examples of how to use the methods can be found in the examples folder when no example is given here, with a commented output, which can be verified by executing the example using node in any terminal: `node examples/[method].js`

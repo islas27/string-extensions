@@ -1,4 +1,4 @@
-let StringHelper = require('../index')
+let StringHelper = require('../StringHelper')
 
 let people = [
   { name: 'pedro', sex: 'm', age: 30 },

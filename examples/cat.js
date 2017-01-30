@@ -1,4 +1,4 @@
-let StringHelper = require('../index')
+let StringHelper = require('../StringHelper')
 
 let helper = new StringHelper()
 let result = helper.cat('this is the first line', '\n')

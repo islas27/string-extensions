@@ -1,4 +1,4 @@
-const StringHelper = require('../index')
+const StringHelper = require('../StringHelper')
 
 let helper = new StringHelper()
 let sections = ['section 1', 'section 2', 'section 3']

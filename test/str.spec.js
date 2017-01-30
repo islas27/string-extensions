@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-let StringHelper = require('../index')
+let StringHelper = require('../StringHelper')
 const expect = require('chai').expect
 
 describe('#str', () => {

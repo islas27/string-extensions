@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 const expect = require('chai').expect
-const StringHelper = require('../index')
+const StringHelper = require('../StringHelper')
 
 describe('#end', () => {
   it('will "pop" the last decorator added if no `deep` is sent', () => {
