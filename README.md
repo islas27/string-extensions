@@ -197,3 +197,19 @@ With this function you can pass a callback to be executed for each member in arr
 
 **Notes**:
 - Because inside the callback function the current builder is available, it is not needed to output content, just to keep interacting with the helper to keep building the final string. Conversely, the result of the callback will be lost.
+
+---
+
+### when(expression, thenArgs, otherwiseArgs)
+This functions works in a similar manner to `catIf()`, it takes a parameter to decide which argument send to a `cat()` call. The main difference is the order of the arguments and the option to add an `otherwiseArgs` should `expression` be false.
+
+**Sintax**: `helper.each([args], callback)`
+
+**Inputs**: `expression`: A parameter used to decide which argument send to the `cat()` call. `thenArgs`: the argument to be sent to `cat()` should `expression` be true. `otherwiseArgs`: the argument to be sent to `cat()` should `expression` be false.
+
+**Outputs**: itself, to be capable of chained execution
+
+**Example**: [when.js](examples/when.js)
+
+**Notes**:
+- `expression` can also be a function, and even use the same context as the builder but it must return a `true` value to really call `cat()` with the `thenArgs`.

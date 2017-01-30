@@ -28,13 +28,11 @@ describe('#when', () => {
     expect(result).to.equal('b')
   })
 
-  it('is capable or receiving functions as `expression`', () => {
-    let exp = function () {
-      return this.str.length > 100
-    }
+  it('behaves safely when no `otherwiseArgs` is sent', () => {
+    let exp = 0 > 100
     let helper = new StringHelper()
-    let result = helper.when(exp, 'This is string is already long!', 'A short string').str()
-    expect(result).to.equal('A short string')
+    let result = helper.suffix('1').when(exp, 'a').str()
+    expect(result).to.equal('')
   })
 
   it('works well with other functions', () => {
