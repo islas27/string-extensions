@@ -14,7 +14,8 @@ function StringHelper () {
   let buffer = []
   let prefixes = []
   let suffixes = []
-  let decorators = false
+  let decorated = false
+  let states = []
 
   function join () {
     const len = arguments.length
@@ -28,8 +29,24 @@ function StringHelper () {
     }
   }
 
+  function saveState () {
+    states.push({p: prefixes, s: suffixes})
+    prefixes = []
+    suffixes = []
+    decorated = false
+  }
+
+  function restoreState () {
+    let currentState = states.pop()
+    prefixes = currentState.p
+    suffixes = currentState.s
+    decorated = true
+  }
+
   this.cat = function () {
-    let args = (decorators) ? enclose(prefixes, arguments, suffixes) : arguments
+    let args = (decorated)
+      ? enclose(prefixes, arguments, suffixes)
+      : arguments
     aux = []
     join.apply(this, args)
     buffer.push(...aux)
@@ -59,17 +76,19 @@ function StringHelper () {
 
   this.wrap = function (prefix, suffix) {
     if (arguments.length !== 2) return this
-    decorators = true
+    decorated = true
     prefixes.push(prefix)
     suffixes.push(suffix)
     return this
   }
 
   this.end = function (deep) {
-    const howMany = (isNum(deep) && deep >= 0) ? deep : 1
+    let howMany = (isNum(deep) && deep >= 0) ? deep : 1
     for (let i = 0; i < howMany; i += 1) {
-      prefixes.pop()
-      suffixes.pop()
+      if (prefixes.length > 0) {
+        prefixes.pop()
+        suffixes.pop()
+      } else if (states.length > 0) restoreState()
     }
     return this
   }
@@ -91,6 +110,11 @@ function StringHelper () {
     for (var i = 0; i < len; i += 1) {
       callback.call(this, data[i], i, data)
     }
+    return this
+  }
+
+  this.suspend = function () {
+    if (decorated) saveState()
     return this
   }
 

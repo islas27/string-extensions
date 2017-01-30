@@ -56,4 +56,11 @@ describe('#end', () => {
       .end(0).cat('f').str()
     expect(result).to.equal('abcde abfde ')
   })
+
+  it('ends the suspend() behavior when called', () => {
+    let helper = new StringHelper('a')
+    let result = helper.wrap('b', 'd').cat('c').suspend().cat('e').end()
+      .cat('c').str()
+    expect(result).to.equal('abcdebcd')
+  })
 })
